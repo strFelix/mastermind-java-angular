@@ -18,18 +18,8 @@ public class GlobalExceptionHandler {
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<?> handleUserExists(UserAlreadyExistsException ex) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(error(ex.getMessage()));
-    }
-
-    @ExceptionHandler(InvalidCredentialsException.class)
-    public ResponseEntity<?> handleInvalidCredentials(InvalidCredentialsException ex) {
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(error(ex.getMessage()));
+    private ErrorResponse error(String message) {
+        return new ErrorResponse(message, LocalDateTime.now());
     }
 
     @ExceptionHandler(Exception.class)
@@ -46,6 +36,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(error(message));
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<?> handleUserExists(UserAlreadyExistsException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<?> handleInvalidCredentials(InvalidCredentialsException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(error(ex.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -72,7 +76,24 @@ public class GlobalExceptionHandler {
         );
     }
 
-    private ErrorResponse error(String message) {
-        return new ErrorResponse(message, LocalDateTime.now());
+    @ExceptionHandler(GameNotFoundException.class)
+    public ResponseEntity<?> handleGameNotFound(GameNotFoundException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<?> handleUserNotFound(UserNotFoundException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(GameAlreadyFinishedException.class)
+    public ResponseEntity<?> handleGameAlreadyFinished(GameAlreadyFinishedException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(error(ex.getMessage()));
     }
 }
