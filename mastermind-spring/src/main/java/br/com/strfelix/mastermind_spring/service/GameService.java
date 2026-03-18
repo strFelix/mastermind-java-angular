@@ -13,6 +13,8 @@ import br.com.strfelix.mastermind_spring.model.User;
 import br.com.strfelix.mastermind_spring.repository.GameRepository;
 import br.com.strfelix.mastermind_spring.repository.GuessRepository;
 import br.com.strfelix.mastermind_spring.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -80,8 +82,9 @@ public class GameService {
         }
     }
 
-    public Game startGame(){
-        User user = userRepository.findById(1L)
+    public Game startGame(Jwt token){
+        Long userId = token.getClaim("id");
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         Game game = new Game(null, generateSecretCode(), 0, 0, LocalDateTime.now(), null, user);
