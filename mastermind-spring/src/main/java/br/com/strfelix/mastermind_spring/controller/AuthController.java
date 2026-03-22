@@ -2,6 +2,8 @@ package br.com.strfelix.mastermind_spring.controller;
 
 import br.com.strfelix.mastermind_spring.dto.request.LoginRequest;
 import br.com.strfelix.mastermind_spring.dto.request.RegisterRequest;
+import br.com.strfelix.mastermind_spring.dto.response.AuthResponse;
+import br.com.strfelix.mastermind_spring.dto.response.UserResponse;
 import br.com.strfelix.mastermind_spring.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.status(201).body(authService.register(request));
     }
 }

@@ -17,7 +17,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -48,7 +50,10 @@ public class GameService {
     }
 
     private int calculateScore(Game game) {
-        return Math.max(0, 100 - (game.getAttempts() * 10));
+        long seconds = Duration.between(game.getStartTime(), game.getEndTime()).getSeconds();
+        int attemptPenalty = game.getAttempts() * 100;
+        int timePenalty = (int) (seconds * 2);
+        return Math.max(0, 1000 - attemptPenalty - timePenalty);
     }
 
     private void validateGameNotFinished(Game game) {
@@ -69,8 +74,8 @@ public class GameService {
 
     private void finalizeGame(Game game, boolean won) {
         if (won) {
-            game.setScore(calculateScore(game));
             game.setEndTime(LocalDateTime.now());
+            game.setScore(calculateScore(game));
         } else if (game.getAttempts() >= 10) {
             game.setScore(0);
             game.setEndTime(LocalDateTime.now());
@@ -82,14 +87,29 @@ public class GameService {
         }
     }
 
-    public Game startGame(Jwt token){
+    private GameResponse toGameResponse(Game game){
+        boolean finished = game.getEndTime() != null;
+        boolean won = finished && game.getScore() != null && game.getScore() > 0;
+
+        return new GameResponse(
+                game.getId(),
+                game.getAttempts(),
+                game.getScore(),
+                game.getStartTime(),
+                game.getEndTime(),
+                finished,
+                won
+        );
+    }
+
+    public GameResponse startGame(Jwt token){
         Long userId = token.getClaim("id");
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         Game game = new Game(null, generateSecretCode(), 0, 0, LocalDateTime.now(), null, user);
 
-        return gameRepository.save(game);
+        return toGameResponse(gameRepository.save(game));
     }
 
     public GuessResponse makeGuess(Long gameId, GuessRequest request) {
@@ -131,5 +151,13 @@ public class GameService {
                 finished,
                 won
         );
+    }
+
+    public List<GameResponse> getUserHistory(Jwt token){
+        Long userId = token.getClaim("id");
+        return gameRepository.findByUserIdOrderByEndTimeDesc(userId)
+                .stream()
+                .map(this::toGameResponse)
+                .toList();
     }
 }

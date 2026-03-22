@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Game {
