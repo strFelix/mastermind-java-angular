@@ -28,17 +28,17 @@ public class GameController {
         return ResponseEntity.status(201).body(gameService.startGame(token));
     }
 
-    @PostMapping("{id}/guess")
+    @PostMapping("/{id}/guess")
     public ResponseEntity<GuessResponse> makeGuess(@PathVariable Long id, @Valid @RequestBody GuessRequest request) {
         return ResponseEntity.ok(gameService.makeGuess(id, request));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<GameResponse> getGame(@PathVariable Long id) {
         return ResponseEntity.ok(gameService.getGame(id));
     }
 
-    @GetMapping("history")
+    @GetMapping("/history")
     public ResponseEntity<List<GameResponse>> getUserHistory(@AuthenticationPrincipal Jwt token){
         return ResponseEntity.ok(gameService.getUserHistory(token));
     }
