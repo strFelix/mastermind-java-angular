@@ -24,6 +24,20 @@ export class Auth {
     return this.http.post(`${this.baseUrl}/auth/register`, { username, email, password });
   }
 
+  getTokenPayload(): any {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    return JSON.parse(atob(token.split('.')[1]));
+  }
+
+  getUsername(): string {
+    return this.getTokenPayload()?.sub ?? '';
+  }
+
+  getBestScore(): number {
+    return this.getTokenPayload()?.bestScore ?? 0;
+  }
+
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/']);

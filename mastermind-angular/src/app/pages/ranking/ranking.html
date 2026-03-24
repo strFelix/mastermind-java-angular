@@ -1,0 +1,86 @@
+<div class="min-h-screen bg-[#0f0f0f] flex items-start justify-center px-6 py-8 font-sans">
+  <div class="w-full max-w-4xl">
+
+    <!-- header -->
+    <div class="flex items-center justify-between mb-10">
+      <h1 class="font-serif text-2xl text-white">
+        Master<span class="italic text-[#c8f04c]">mind</span>
+      </h1>
+      <button
+        (click)="goBack()"
+        class="text-xs text-neutral-600 border border-[#222] rounded-lg px-4 py-2
+               hover:text-[#c8f04c] hover:border-[#c8f04c]/20 transition-colors cursor-pointer">
+        Voltar
+      </button>
+    </div>
+
+    <!-- título -->
+    <div class="mb-8">
+      <p class="text-[11px] uppercase tracking-widest text-neutral-600 mb-1">Melhores jogadores</p>
+      <h2 class="font-serif text-3xl text-white font-normal">
+        Ranking <span class="italic text-[#c8f04c]">global</span>
+      </h2>
+    </div>
+
+    <!-- loading -->
+    @if(loading()) {
+      <p class="text-neutral-600 text-sm text-center py-10">Carregando...</p>
+    }
+
+    <!-- tabela -->
+    @if(!loading() && ranking().length > 0) {
+      <div class="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden">
+
+        <!-- cabeçalho -->
+        <div class="grid grid-cols-3 px-6 py-3 border-b border-[#2a2a2a]">
+          <span class="text-[11px] uppercase tracking-widest text-neutral-600">#</span>
+          <span class="text-[11px] uppercase tracking-widest text-neutral-600">Jogador</span>
+          <span class="text-[11px] uppercase tracking-widest text-neutral-600 text-right">Pontuação</span>
+        </div>
+
+        <!-- linhas -->
+        @for(entry of ranking(); track entry.username; let i = $index) {
+          <div
+            class="grid grid-cols-3 px-6 py-4 border-b border-[#222] last:border-none transition-colors hover:bg-[#222]"
+            [class.bg-[#1f1f1f]]="i % 2 === 0">
+
+            <!-- posição -->
+            <div class="flex items-center">
+              @if(i === 0) {
+                <span class="text-[#c8f04c] font-medium text-sm">1°</span>
+              } @else if(i === 1) {
+                <span class="text-neutral-400 font-medium text-sm">2°</span>
+              } @else if(i === 2) {
+                <span class="text-neutral-600 font-medium text-sm">3°</span>
+              } @else {
+                <span class="text-neutral-700 text-sm">{{ i + 1 }}°</span>
+              }
+            </div>
+
+            <!-- username -->
+            <div class="flex items-center">
+              <span class="text-sm" [class]="i === 0 ? 'text-white font-medium' : 'text-neutral-400'">
+                {{ entry.username }}
+              </span>
+            </div>
+
+            <!-- score -->
+            <div class="flex items-center justify-end">
+              <span class="text-sm" [class]="i === 0 ? 'text-[#c8f04c] font-medium' : 'text-neutral-400'">
+                {{ entry.bestScore }} pts
+              </span>
+            </div>
+
+          </div>
+        }
+
+      </div>
+    }
+
+    <!-- vazio -->
+    @if(!loading() && ranking().length === 0) {
+      <p class="text-neutral-600 text-sm text-center py-10">Nenhum jogador no ranking ainda.</p>
+    }
+
+  </div>
+</div>
