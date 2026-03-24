@@ -1,18 +1,7 @@
 <div class="min-h-screen bg-[#0f0f0f] flex items-center justify-center px-6 py-8 font-sans">
   <div class="w-full max-w-4xl">
 
-    <!-- header -->
-    <div class="flex items-center justify-between mb-10">
-      <h1 class="font-serif text-2xl text-white">
-        Master<span class="italic text-[#c8f04c]">mind</span>
-      </h1>
-      <button
-        (click)="goBack()"
-        class="text-xs text-neutral-600 border border-[#222] rounded-lg px-4 py-2
-               hover:text-[#c8f04c] hover:border-[#c8f04c]/20 transition-colors cursor-pointer">
-        Voltar
-      </button>
-    </div>
+    <app-header buttonLabel="Voltar" (buttonClick)="goBack()" />
 
     <!-- título -->
     <div class="mb-8">

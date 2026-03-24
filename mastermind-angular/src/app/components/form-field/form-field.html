@@ -1,0 +1,14 @@
+<div class="mb-4">
+  <label class="block text-[11px] font-medium tracking-widest uppercase text-neutral-600 mb-1.5">
+    {{ label }}
+  </label>
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    [formControl]="control"
+    class="w-full bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-4 py-3 text-sm text-white
+           outline-none focus:border-[#c8f04c] transition-colors placeholder:text-neutral-700"/>
+  @if(control.invalid && control.touched && errorMessage) {
+    <p class="text-red-400 text-xs mt-1">{{ errorMessage }}</p>
+  }
+</div>

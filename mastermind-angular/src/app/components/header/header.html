@@ -1,0 +1,15 @@
+<div class="flex items-center justify-between mb-8">
+  <h1 class="font-serif text-2xl text-white">
+    Master<span class="italic text-[#c8f04c]">mind</span>
+  </h1>
+  @if(buttonLabel) {
+    <button
+      (click)="buttonClick.emit()"
+      class="text-xs border rounded-lg px-4 py-2 transition-colors cursor-pointer"
+      [class]="buttonDanger
+        ? 'text-neutral-600 border-[#222] hover:text-red-400 hover:border-red-400/20'
+        : 'text-neutral-600 border-[#222] hover:text-[#c8f04c] hover:border-[#c8f04c]/20'">
+      {{ buttonLabel }}
+    </button>
+  }
+</div>

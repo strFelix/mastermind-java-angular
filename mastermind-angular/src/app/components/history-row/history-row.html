@@ -1,0 +1,14 @@
+<div class="flex items-center justify-between py-3 border-b border-[#1a1a1a]">
+  <span class="text-xs text-neutral-600">
+    {{ startTime | date:'dd/MM, HH:mm' }}
+  </span>
+  <span class="text-xs text-neutral-600">
+    {{ attempts }} tent.
+  </span>
+  <span class="text-sm text-white font-medium">{{ score }} pts</span>
+  <span
+    class="text-[10px] font-medium px-2.5 py-1 rounded-md"
+    [class]="won ? 'bg-[#c8f04c]/10 text-[#c8f04c]' : 'bg-red-500/10 text-red-400'">
+    {{ won ? 'Vitória' : 'Derrota' }}
+  </span>
+</div>

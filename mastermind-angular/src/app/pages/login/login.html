@@ -8,29 +8,16 @@
 
     <form [formGroup]="form" (ngSubmit)="onLogin()">
 
-      <div class="mb-4">
-        <label class="block text-[11px] font-medium tracking-widest uppercase text-neutral-600 mb-1.5">
-          Usuário
-        </label>
-        <input
-          formControlName="username"
-          type="text"
-          placeholder="seu usuário"
-          class="w-full bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-4 py-3 text-sm text-white
-                 outline-none focus:border-[#c8f04c] transition-colors placeholder:text-neutral-700"/>
-      </div>
+      <app-form-field
+        label="Usuário"
+        placeholder="seu usuário"
+        [control]="f['username']" />
 
-      <div class="mb-6">
-        <label class="block text-[11px] font-medium tracking-widest uppercase text-neutral-600 mb-1.5">
-          Senha
-        </label>
-        <input
-          formControlName="password"
-          type="password"
-          placeholder="••••••••"
-          class="w-full bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-4 py-3 text-sm text-white
-                 outline-none focus:border-[#c8f04c] transition-colors placeholder:text-neutral-700"/>
-      </div>
+      <app-form-field
+        label="Senha"
+        type="password"
+        placeholder="••••••••"
+        [control]="f['password']" />
 
       @if(errorMessage()){
         <p class="text-red-400 text-sm mb-4 text-center">

@@ -3,11 +3,13 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AuthService } from '../../services/auth/auth';
 import { GameService, GameResponse } from '../../services/game/game';
+import { HeaderComponent } from "../../components/header/header";
+import { HistoryRowComponent } from "../../components/history-row/history-row";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, DatePipe],
+  imports: [CommonModule, RouterLink, HeaderComponent, HistoryRowComponent],
   templateUrl: './dashboard.html',
 })
 export class Dashboard implements OnInit {

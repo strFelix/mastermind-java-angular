@@ -1,0 +1,36 @@
+<div class="flex items-center gap-3" [class.opacity-20]="isEmpty">
+
+  <!-- número da linha -->
+  <span class="text-[11px] w-4 text-right"
+        [class]="isActive ? 'text-[#c8f04c]' : 'text-neutral-600'">
+    {{ rowNumber }}
+  </span>
+
+  <!-- células -->
+  <div class="flex gap-2">
+    @for(cell of getCells(); track $index) {
+      <div class="w-12 h-12 rounded-xl border flex items-center justify-center font-medium text-base transition-colors"
+           [class]="isEmpty
+             ? 'bg-[#141414] border-[#1f1f1f]'
+             : isActive
+               ? (cell ? 'bg-[#222] border-[#c8f04c]/30 text-white' : 'bg-[#1a1a1a] border-[#2a2a2a] text-neutral-700')
+               : 'bg-[#222] border-[#3a3a3a] text-white'">
+        {{ cell }}
+      </div>
+    }
+  </div>
+
+  <!-- dots de feedback -->
+  <div class="flex gap-1.5 ml-1">
+    @for(i of [0,1,2,3]; track i) {
+      <div class="w-2.5 h-2.5 rounded-full"
+           [class]="isEmpty
+             ? 'bg-[#1a1a1a]'
+             : isActive
+               ? 'bg-[#1a1a1a] border border-[#2a2a2a]'
+               : (i < correctPositions ? 'bg-[#c8f04c]' : 'bg-[#2a2a2a]')">
+      </div>
+    }
+  </div>
+
+</div>

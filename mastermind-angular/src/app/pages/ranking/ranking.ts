@@ -2,11 +2,12 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RankingService, RankingEntry } from '../../services/ranking/ranking';
+import { HeaderComponent } from "../../components/header/header";
 
 @Component({
   selector: 'app-ranking',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent],
   templateUrl: './ranking.html',
 })
 export class Ranking implements OnInit {

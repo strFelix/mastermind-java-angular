@@ -3,10 +3,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormFieldComponent } from "../../components/form-field/form-field";
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, FormFieldComponent],
   templateUrl: './register.html',
   standalone: true,
 })

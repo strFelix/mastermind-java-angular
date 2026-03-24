@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { GameService, GuessResponse } from '../../services/game/game';
+import { HeaderComponent } from "../../components/header/header";
+import { GameBoardRowComponent } from "../../components/game-board-row/game-board-row";
+import { GameResultComponent } from "../../components/game-result/game-result";
 
 interface AttemptRow {
   guess: string;
@@ -12,7 +15,7 @@ interface AttemptRow {
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent, GameBoardRowComponent, GameResultComponent],
   templateUrl: './game.html',
 })
 export class Game implements OnInit {
