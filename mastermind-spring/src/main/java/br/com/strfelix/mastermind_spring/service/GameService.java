@@ -51,7 +51,7 @@ public class GameService {
 
     private int calculateScore(Game game) {
         long seconds = Duration.between(game.getStartTime(), game.getEndTime()).getSeconds();
-        int attemptPenalty = game.getAttempts() * 100;
+        int attemptPenalty = (game.getAttempts() - 1) * 100;
         int timePenalty = (int) (seconds * 2);
         return Math.max(0, 1000 - attemptPenalty - timePenalty);
     }
