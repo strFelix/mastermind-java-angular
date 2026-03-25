@@ -49,7 +49,7 @@ Implementação web do jogo Mastermind, desenvolvida com Spring Boot no backend 
 cd mastermind-spring
 
 # Rodar com perfil dev (necessário para CORS)
-./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+mvn spring-boot:run
 ```
 
 O backend sobe em `http://localhost:8080`.
