@@ -60,6 +60,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                            .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/v3/api-docs").permitAll()
                             .requestMatchers("/auth/**").permitAll();
                     for (String route : extraPermits) {
                         auth.requestMatchers(route).permitAll();

@@ -1,6 +1,7 @@
 package br.com.strfelix.mastermind_spring.exceptions;
 
 import br.com.strfelix.mastermind_spring.dto.response.ErrorResponse;
+import br.com.strfelix.mastermind_spring.dto.response.ValidationErrorResponse;
 import br.com.strfelix.mastermind_spring.exceptions.auth.InvalidCredentialsException;
 import br.com.strfelix.mastermind_spring.exceptions.game.GameAlreadyFinishedException;
 import br.com.strfelix.mastermind_spring.exceptions.game.GameNotFoundException;
@@ -58,26 +59,18 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidation(MethodArgumentNotValidException ex) {
-
+    public ResponseEntity<ValidationErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
         List<Map<String, String>> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(err -> {
-                    assert err.getDefaultMessage() != null;
-                    return Map.of(
-                            "field", err.getField(),
-                            "message", err.getDefaultMessage()
-                    );
-                })
+                .map(err -> Map.of(
+                        "field", err.getField(),
+                        "message", err.getDefaultMessage()
+                ))
                 .toList();
 
         return ResponseEntity.badRequest().body(
-                Map.of(
-                        "message", "Validation error",
-                        "errors", errors,
-                        "timestamp", LocalDateTime.now()
-                )
+                new ValidationErrorResponse("Validation error", errors, LocalDateTime.now())
         );
     }
 
